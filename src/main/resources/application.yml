@@ -1,1 +1,22 @@
-
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  # Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://diff-svc-server.postgres.database.azure.com:5432
+    username: pas1007
+    password: rmadh48965!
+  # jpa properties
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    open-in-view: false
+    generate-ddl: true
+  sql:
+    init:
+      platform: postgres
