@@ -22,5 +22,14 @@ public class UserService {
         return "회원가입이 완료되었습니다.";
     }
 
+    @Transactional
+    public String deleteUser(Long id){
+        userRepository.deleteById(id);
+        return "회원 탈퇴 원료";
+    }
+
+    public boolean checkIfUserExists(Long id) {
+        return userRepository.existsById(id);
+    }
 
 }
