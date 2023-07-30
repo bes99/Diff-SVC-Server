@@ -1,35 +1,46 @@
 package com.example.diffsvcserver.user;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import com.example.diffsvcserver.error.BaseResponse;
+import com.example.diffsvcserver.error.DataResponse;
+import com.example.diffsvcserver.error.MessageUtils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
+@ApiResponses({
+        @ApiResponse(responseCode = "200", description = MessageUtils.SUCCESS),
+        @ApiResponse(responseCode = "400", description = MessageUtils.FAIL,
+                content = @Content(schema = @Schema(implementation = BaseResponse.class)))})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
+@Tag(name = "user", description = "User API")
 public class UserController {
     private final UserService userService;
 
-    @ApiOperation(value = "계정 생성", notes = "회원 정보를 입력받아 db에 저장한다.")
-    @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "계정 생성 완료"),
-            @ApiResponse(code = 400, message = "형식에 부합하지 않은 필드에 대한 오류 메시지 반환")
-    })
-    @PostMapping("/")
-    public ResponseEntity<?> join(@Valid @RequestBody UserFormDTO userFormDTO){
-        String message = userService.join(userFormDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(message);
+    @Operation(summary = "유저 상세정보 조회", description = "유저의 상세정보와 해당 유저를 보유하고 있는 결과 보이스를 조회합니다.")
+    @GetMapping("/{id}")
+    public DataResponse<User> select(@PathVariable Long id){
+        return new DataResponse<>(userService.findById(id));
     }
 
+    @Operation(summary = "유저 회원가입", description = "유저의 정보를 받아 db에 저장합니다.")
+    @PostMapping("")
+    public BaseResponse join(@Valid @RequestBody UserFormDTO userFormDTO){
+        userService.join(userFormDTO);
+        return new BaseResponse();
+    }
+
+    @Operation(summary = "유저 회원 탈퇴", description = "유저의 정보를 db에서 삭제합니다.")
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUserById(@PathVariable Long id){
-        return userService.checkIfUserExists(id)
-                ? ResponseEntity.status(HttpStatus.OK).body(userService.deleteUser(id))
-                : ResponseEntity.status(HttpStatus.NOT_FOUND).body("사용자가 존재하지 않습니다.");
+    public BaseResponse deleteUserById(@PathVariable Long id){
+        userService.deleteUser(id);
+        return new BaseResponse();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.diffsvcserver.user;
 
+import com.example.diffsvcserver.error.InvalidInputException;
+import com.example.diffsvcserver.error.MessageUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -10,7 +12,10 @@ import javax.transaction.Transactional;
 public class UserService {
     private final UserRepository userRepository;
     @Transactional
-    public String join(UserFormDTO userFormDTO){
+    public void join(UserFormDTO userFormDTO){
+        if(userRepository.existsByUserId(userFormDTO.getUserId())){
+            throw new InvalidInputException(MessageUtils.DUPLICATE_USER_ID);
+        }
         User user = User.builder()
                 .userId(userFormDTO.getUserId())
                 .userPwd(userFormDTO.getUserPwd())
@@ -19,17 +24,18 @@ public class UserService {
                 .build();
 
         userRepository.save(user);
-        return "회원가입이 완료되었습니다.";
+    }
+    public User findById(Long id){
+        User user = userRepository.findById(id).orElseThrow(() ->
+                new InvalidInputException(MessageUtils.INVALID_USER_ID));
+        return user;
     }
 
     @Transactional
-    public String deleteUser(Long id){
-        userRepository.deleteById(id);
-        return "회원 탈퇴 원료";
-    }
-
-    public boolean checkIfUserExists(Long id) {
-        return userRepository.existsById(id);
+    public void deleteUser(Long id){
+        User user = userRepository.findById(id).orElseThrow(() ->
+                new InvalidInputException(MessageUtils.INVALID_USER_ID));
+        userRepository.delete(user);
     }
 
 }

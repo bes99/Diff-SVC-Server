@@ -31,8 +31,8 @@ dependencies {
     implementation 'com.azure:azure-storage-blob:12.22.2'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.7.14'
     implementation group: 'org.hibernate.validator', name: 'hibernate-validator', version: '6.2.0.Final'
-    implementation 'io.springfox:springfox-boot-starter:3.0.0'
-    implementation 'io.springfox:springfox-swagger-ui:3.0.0'
+    implementation group: 'org.springdoc', name: 'springdoc-openapi-ui', version: '1.7.0'
+
 
 }
 

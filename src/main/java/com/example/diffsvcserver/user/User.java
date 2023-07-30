@@ -1,6 +1,7 @@
 package com.example.diffsvcserver.user;
 
 import com.example.diffsvcserver.voice.ResultVoice;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,9 @@ public class User {
     private String sex;
     @Column(name = "select_model")
     private String selectModel;
+    @Column(name = "user_image")
+    private String image;
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ResultVoice> resultVoices;
 

@@ -1,6 +1,7 @@
 package com.example.diffsvcserver.voice;
 
 import com.example.diffsvcserver.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 
@@ -14,6 +15,9 @@ public class ResultVoice {
     private String resultVoice;
     @Column(name = "select_model")
     private String selectModel;
+    @Column(name = "model_image")
+    private String image;
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
