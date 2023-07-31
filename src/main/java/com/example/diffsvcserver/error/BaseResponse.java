@@ -1,5 +1,6 @@
 package com.example.diffsvcserver.error;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 
 @Getter
@@ -11,8 +12,8 @@ public class BaseResponse {
         this.result = MessageUtils.SUCCESS;
         this.reason  = "";
     }
-    public BaseResponse(String result){
-        this.reason = MessageUtils.FAIL;
-        this.result = result;
+    public BaseResponse(String reason){
+        this.result = MessageUtils.FAIL;
+        this.reason = reason;
     }
 }
