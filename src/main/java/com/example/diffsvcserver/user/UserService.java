@@ -2,10 +2,13 @@ package com.example.diffsvcserver.user;
 
 import com.example.diffsvcserver.error.InvalidInputException;
 import com.example.diffsvcserver.error.MessageUtils;
+import com.example.diffsvcserver.voice.ModelVoice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -38,4 +41,11 @@ public class UserService {
         userRepository.delete(user);
     }
 
+    public List<ModelVoice> getBookmark(Long id){
+        User user = userRepository.findById(id).orElseThrow(() ->
+                new InvalidInputException(MessageUtils.INVALID_USER_ID));
+        List<ModelVoice> bookmark = user.getModelVoices();
+        return bookmark;
+
+    }
 }

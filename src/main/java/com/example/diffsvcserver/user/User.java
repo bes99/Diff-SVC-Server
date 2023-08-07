@@ -1,5 +1,6 @@
 package com.example.diffsvcserver.user;
 
+import com.example.diffsvcserver.voice.ModelVoice;
 import com.example.diffsvcserver.voice.ResultVoice;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -35,4 +36,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ResultVoice> resultVoices;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "user")
+    private List<ModelVoice> modelVoices;
 }

@@ -3,6 +3,7 @@ package com.example.diffsvcserver.user;
 import com.example.diffsvcserver.error.BaseResponse;
 import com.example.diffsvcserver.error.DataResponse;
 import com.example.diffsvcserver.error.MessageUtils;
+import com.example.diffsvcserver.voice.ModelVoice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
+import java.util.List;
 
 @ApiResponses({
         @ApiResponse(responseCode = "200", description = MessageUtils.SUCCESS),
@@ -42,5 +44,16 @@ public class UserController {
     public BaseResponse deleteUserById(@PathVariable Long id){
         userService.deleteUser(id);
         return new BaseResponse();
+    }
+
+//    @Operation(summary = "모델 적용하기", description = "사용할 모델을 가져온 후 유저 정보에 저장한다.")
+//    @GetMapping("")
+//    public DataResponse<> selectModel(){
+//
+//    }
+    @Operation(summary = "모델 즐겨찾기",description = "유저가 즐겨찾기 설정한 모델들을 가져온다")
+    @GetMapping("/{id}/bookmark")
+    public DataResponse<List<ModelVoice>> bookmark(@PathVariable Long id){
+        return new DataResponse<>(userService.getBookmark(id));
     }
 }
