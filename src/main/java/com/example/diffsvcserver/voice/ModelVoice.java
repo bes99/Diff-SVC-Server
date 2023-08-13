@@ -19,6 +19,7 @@ public class ModelVoice {
     @Column(name = "model_name")
     private String name;
     private String description;
+    private String tag;
     private String url;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
