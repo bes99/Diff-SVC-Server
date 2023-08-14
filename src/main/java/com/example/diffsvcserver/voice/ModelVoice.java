@@ -21,6 +21,7 @@ public class ModelVoice {
     private String description;
     private String tag;
     private String url;
+    private String image;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;

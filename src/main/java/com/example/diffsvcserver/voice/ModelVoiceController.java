@@ -14,6 +14,8 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @ApiResponses({
         @ApiResponse(responseCode = "200", description = MessageUtils.SUCCESS),
         @ApiResponse(responseCode = "400", description = MessageUtils.FAIL,
@@ -37,5 +39,16 @@ public class ModelVoiceController {
             @RequestPart String name, @RequestPart String description, @RequestPart String tag) throws Exception {
         modelVoiceService.uploadAndSave(name,description,tag,multipartFile);
         return new BaseResponse();
+    }
+
+    @Operation(summary = "모델 리스트 조회",description = "tag에 따라 모든 모델 리스트를 조회한다.\n " +
+            "tag를 입력하지 않으면 조건없이 모든 모델 리스트 조회한다.")
+    @GetMapping("/")
+    public DataResponse<List<ResponseModelVoice>> viewAllModel(@RequestParam(required = false) String tag){
+        if(tag==null) {
+            return new DataResponse<>(modelVoiceService.viewAllModel());
+        }else{
+            return new DataResponse<>(modelVoiceService.viewAllModelByTag(tag));
+        }
     }
 }

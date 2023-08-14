@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +35,26 @@ public class ModelVoiceService {
                 .url(url)
                 .build();
         modelVoiceRepository.save(modelVoice);
+    }
+
+    public List<ResponseModelVoice> viewAllModel(){
+        List<ModelVoice> modelVoices = modelVoiceRepository.findAll();
+        return modelEntityToResponseVO(modelVoices);
+    }
+
+    public List<ResponseModelVoice> viewAllModelByTag(String tag){
+        List<ModelVoice> modelVoices = modelVoiceRepository.findByTag(tag);
+        return modelEntityToResponseVO(modelVoices);
+    }
+    public List<ResponseModelVoice> modelEntityToResponseVO(List<ModelVoice> modelVoices){
+        List<ResponseModelVoice> responseModelVoices = new ArrayList<>();
+        modelVoices.forEach(v->{
+            responseModelVoices.add(ResponseModelVoice.builder()
+                    .image(v.getImage())
+                    .name(v.getName())
+                    .description(v.getDescription())
+                    .build());
+        });
+        return responseModelVoices;
     }
 }
