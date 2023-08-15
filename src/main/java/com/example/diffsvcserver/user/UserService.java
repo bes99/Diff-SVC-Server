@@ -41,11 +41,11 @@ public class UserService {
         userRepository.delete(user);
     }
 
-    public List<ModelVoice> getBookmark(Long id){
-        User user = userRepository.findById(id).orElseThrow(() ->
-                new InvalidInputException(MessageUtils.INVALID_USER_ID));
-        List<ModelVoice> bookmark = user.getModelVoices();
-        return bookmark;
-
-    }
+//    public List<ModelVoice> getBookmark(Long id){
+//        User user = userRepository.findById(id).orElseThrow(() ->
+//                new InvalidInputException(MessageUtils.INVALID_USER_ID));
+//        List<ModelVoice> bookmark = user.getModelVoices();
+//        return bookmark;
+//
+//    }
 }

@@ -45,15 +45,16 @@ public class UserController {
         userService.deleteUser(id);
         return new BaseResponse();
     }
-
 //    @Operation(summary = "모델 적용하기", description = "사용할 모델을 가져온 후 유저 정보에 저장한다.")
 //    @GetMapping("")
 //    public DataResponse<> selectModel(){
 //
 //    }
-    @Operation(summary = "모델 즐겨찾기",description = "유저가 즐겨찾기 설정한 모델들을 가져온다")
-    @GetMapping("/{id}/bookmark")
-    public DataResponse<List<ModelVoice>> bookmark(@PathVariable Long id){
-        return new DataResponse<>(userService.getBookmark(id));
-    }
+
+//    @Operation(summary = "모델 즐겨찾기",description = "유저가 즐겨찾기 설정한 모델들을 가져온다")
+//    @GetMapping("/{id}/bookmark")
+//    public DataResponse<List<ModelVoice>> bookmark(@PathVariable Long id){
+//        return new DataResponse<>(userService.getBookmark(id));
+//    }
+
 }
