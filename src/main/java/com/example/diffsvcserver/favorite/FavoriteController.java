@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/favorite")
-@Tag(name = "Favorite", description = "Favorite API")
+@Tag(name = "Favorite", description = "즐겨찾기 API")
 public class FavoriteController {
     private final FavoriteService favoriteService;
     @Operation(summary = "모델 즐겨찾기 추가", description = "하트 누르면 즐겨찾기에 추가한다.")

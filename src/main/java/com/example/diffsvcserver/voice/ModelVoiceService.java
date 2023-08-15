@@ -50,6 +50,7 @@ public class ModelVoiceService {
         List<ResponseModelVoice> responseModelVoices = new ArrayList<>();
         modelVoices.forEach(v->{
             responseModelVoices.add(ResponseModelVoice.builder()
+                    .id(v.getId())
                     .image(v.getImage())
                     .name(v.getName())
                     .description(v.getDescription())

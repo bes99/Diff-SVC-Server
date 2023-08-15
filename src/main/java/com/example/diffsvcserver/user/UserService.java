@@ -3,6 +3,7 @@ package com.example.diffsvcserver.user;
 import com.example.diffsvcserver.error.InvalidInputException;
 import com.example.diffsvcserver.error.MessageUtils;
 import com.example.diffsvcserver.voice.ModelVoice;
+import com.example.diffsvcserver.voice.ModelVoiceRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final ModelVoiceRepository modelVoiceRepository;
     @Transactional
     public void join(UserFormDTO userFormDTO){
         if(userRepository.existsByUserId(userFormDTO.getUserId())){
@@ -41,11 +43,11 @@ public class UserService {
         userRepository.delete(user);
     }
 
-//    public List<ModelVoice> getBookmark(Long id){
-//        User user = userRepository.findById(id).orElseThrow(() ->
-//                new InvalidInputException(MessageUtils.INVALID_USER_ID));
-//        List<ModelVoice> bookmark = user.getModelVoices();
-//        return bookmark;
-//
-//    }
+    @Transactional
+    public void applyModel(Long userId, Long modelId){
+        ModelVoice modelVoice = modelVoiceRepository.findById(modelId).orElseThrow(() ->
+                new InvalidInputException(MessageUtils.INVALID_MODELVOICE_ID));
+        userRepository.applyModel(userId,modelVoice.getUrl());
+    }
+
 }
