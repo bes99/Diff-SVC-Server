@@ -3,7 +3,6 @@ package com.example.diffsvcserver.user;
 import com.example.diffsvcserver.error.BaseResponse;
 import com.example.diffsvcserver.error.DataResponse;
 import com.example.diffsvcserver.error.MessageUtils;
-import com.example.diffsvcserver.voice.ModelVoice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -33,7 +32,7 @@ public class UserController {
     }
 
     @Operation(summary = "유저 회원가입", description = "유저의 정보를 받아 db에 저장합니다.")
-    @PostMapping("")
+    @PostMapping("/")
     public BaseResponse join(@Valid @RequestBody UserFormDTO userFormDTO){
         userService.join(userFormDTO);
         return new BaseResponse();
@@ -45,16 +44,12 @@ public class UserController {
         userService.deleteUser(id);
         return new BaseResponse();
     }
-//    @Operation(summary = "모델 적용하기", description = "사용할 모델을 가져온 후 유저 정보에 저장한다.")
-//    @GetMapping("")
-//    public DataResponse<> selectModel(){
-//
-//    }
-
-//    @Operation(summary = "모델 즐겨찾기",description = "유저가 즐겨찾기 설정한 모델들을 가져온다")
-//    @GetMapping("/{id}/bookmark")
-//    public DataResponse<List<ModelVoice>> bookmark(@PathVariable Long id){
-//        return new DataResponse<>(userService.getBookmark(id));
-//    }
+    @Operation(summary = "모델 적용하기", description = "모델 상세보기에서 적용하기 버튼 클릭 시 적용")
+    @PutMapping("/")
+    public BaseResponse applyModel(@RequestParam("user_id") Long userId,
+                                   @RequestParam("model_id") Long modelId){
+        userService.applyModel(userId,modelId);
+        return new BaseResponse();
+    }
 
 }
