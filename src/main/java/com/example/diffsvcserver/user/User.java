@@ -1,6 +1,6 @@
 package com.example.diffsvcserver.user;
 
-import com.example.diffsvcserver.voice.ModelVoice;
+import com.example.diffsvcserver.favorite.Favorite;
 import com.example.diffsvcserver.voice.ResultVoice;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -37,6 +38,6 @@ public class User {
     private List<ResultVoice> resultVoices;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    private List<ModelVoice> modelVoices;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favorites = new ArrayList<>();
 }

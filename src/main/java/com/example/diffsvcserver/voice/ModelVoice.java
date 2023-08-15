@@ -1,10 +1,11 @@
 package com.example.diffsvcserver.voice;
 
-import com.example.diffsvcserver.user.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.diffsvcserver.favorite.Favorite;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "model_voice_tb")
@@ -22,8 +23,7 @@ public class ModelVoice {
     private String tag;
     private String url;
     private String image;
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
 
+    @OneToMany(mappedBy = "modelVoice", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Favorite> favorites = new ArrayList<>();
 }
