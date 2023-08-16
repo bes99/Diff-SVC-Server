@@ -8,6 +8,6 @@ public interface UserRepository extends JpaRepository<User,Long> {
     boolean existsByUserId(String userId);
 
     @Modifying
-    @Query("UPDATE User u SET u.selectModel = :model WHERE u.id = :userId")
-    void applyModel(Long userId, String model);
+    @Query("UPDATE User u SET u.appliedModel = :model WHERE u.id = :userId")
+    void applyModel(Long userId, Long model);
 }

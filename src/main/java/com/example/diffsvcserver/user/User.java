@@ -29,8 +29,8 @@ public class User {
     private String userPwd;
     private String email;
     private String sex;
-    @Column(name = "select_model")
-    private String selectModel;
+    @Column(name = "applied_model")
+    private Long appliedModel;
     @Column(name = "user_image")
     private String image;
     @JsonIgnore
