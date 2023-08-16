@@ -4,6 +4,7 @@ import com.example.diffsvcserver.error.InvalidInputException;
 import com.example.diffsvcserver.error.MessageUtils;
 import com.example.diffsvcserver.voice.ModelVoice;
 import com.example.diffsvcserver.voice.ModelVoiceRepository;
+import com.example.diffsvcserver.voice.ResponseModelVoice;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -45,9 +46,21 @@ public class UserService {
 
     @Transactional
     public void applyModel(Long userId, Long modelId){
-        ModelVoice modelVoice = modelVoiceRepository.findById(modelId).orElseThrow(() ->
-                new InvalidInputException(MessageUtils.INVALID_MODELVOICE_ID));
-        userRepository.applyModel(userId,modelVoice.getUrl());
+        userRepository.applyModel(userId,modelId);
     }
 
+    public ResponseModelVoice viewAppliedModel(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(() ->
+                new InvalidInputException(MessageUtils.INVALID_USER_ID));
+        ModelVoice modelVoice = modelVoiceRepository.findById(user.getAppliedModel()).orElseThrow(() ->
+                new InvalidInputException(MessageUtils.INVALID_MODELVOICE_ID));
+
+        ResponseModelVoice responseModelVoice = ResponseModelVoice.builder()
+                .id(modelVoice.getId())
+                .name(modelVoice.getName())
+                .description(modelVoice.getDescription())
+                .image(modelVoice.getImage())
+                .build();
+        return responseModelVoice;
+    }
 }

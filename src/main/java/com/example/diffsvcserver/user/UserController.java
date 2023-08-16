@@ -3,6 +3,7 @@ package com.example.diffsvcserver.user;
 import com.example.diffsvcserver.error.BaseResponse;
 import com.example.diffsvcserver.error.DataResponse;
 import com.example.diffsvcserver.error.MessageUtils;
+import com.example.diffsvcserver.voice.ResponseModelVoice;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,14 +32,14 @@ public class UserController {
         return new DataResponse<>(userService.findById(id));
     }
 
-    @Operation(summary = "유저 회원가입", description = "유저의 정보를 받아 db에 저장합니다.")
+    @Operation(summary = "유저 회원가입", description = "유저의 정보를 받아 db에 저장한다.")
     @PostMapping("/")
     public BaseResponse join(@Valid @RequestBody UserFormDTO userFormDTO){
         userService.join(userFormDTO);
         return new BaseResponse();
     }
 
-    @Operation(summary = "유저 회원 탈퇴", description = "유저의 정보를 db에서 삭제합니다.")
+    @Operation(summary = "유저 회원 탈퇴", description = "유저의 정보를 db에서 삭제한다.")
     @DeleteMapping("/{id}")
     public BaseResponse deleteUserById(@PathVariable Long id){
         userService.deleteUser(id);
@@ -51,5 +52,12 @@ public class UserController {
         userService.applyModel(userId,modelId);
         return new BaseResponse();
     }
+
+    @Operation(summary = "적용중인 모델 조회", description = "유저가 현재 적용중인 모델을 조회한다.")
+    @GetMapping("/{id}/applied-model")
+    public DataResponse<ResponseModelVoice> viewAppliedModel(@PathVariable("id") Long userId){
+        return new DataResponse<>(userService.viewAppliedModel(userId));
+    }
+
 
 }
