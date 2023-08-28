@@ -6,25 +6,27 @@ import com.example.diffsvcserver.voice.ModelVoice;
 import com.example.diffsvcserver.voice.ModelVoiceRepository;
 import com.example.diffsvcserver.voice.ResponseModelVoice;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
     private final ModelVoiceRepository modelVoiceRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
     @Transactional
     public void join(UserFormDTO userFormDTO){
         if(userRepository.existsByUserId(userFormDTO.getUserId())){
             throw new InvalidInputException(MessageUtils.DUPLICATE_USER_ID);
         }
+        String encryptedPassword = passwordEncoder.encode(userFormDTO.getUserPwd());
+
         User user = User.builder()
                 .userId(userFormDTO.getUserId())
-                .userPwd(userFormDTO.getUserPwd())
+                .userPwd(encryptedPassword)
                 .sex(userFormDTO.getSex())
                 .email(userFormDTO.getEmail())
                 .build();
