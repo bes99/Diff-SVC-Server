@@ -27,7 +27,7 @@ public class ModelVoiceService {
     @Transactional
     public void uploadAndSave(String name, String description, String tag,
                               MultipartFile file) throws Exception {
-        String url = azureStorageService.uploadFileToBlob(file, containerName);
+        String url = azureStorageService.uploadFileToBlob(file);
         ModelVoice modelVoice = ModelVoice.builder()
                 .name(name)
                 .description(description)
