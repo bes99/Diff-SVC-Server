@@ -11,6 +11,8 @@
 - azure blob 
 - azure vm
 - google tts api
+- docker
+- github action
 
 ## Details
 https://bes99.tistory.com/7
